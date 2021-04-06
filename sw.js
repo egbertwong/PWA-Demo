@@ -28,14 +28,14 @@ self.addEventListener('fetch', function (e) {
 
 self.addEventListener('activate', function (e) {
     e.waitUntil(
-        Promise.all(
+        Promise.all([
             caches.keys()
                 .then((cacheNames) => {
                     return cacheNames
                         .filter((name) => name !== cacheStorageKey)
                         .map((name) => caches.delete(name));
                 })
-        ).then(() => {
+        ]).then(() => {
             return self.clients.claim()
         })
     );
